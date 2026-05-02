@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as pyplot
 
-Existing = pyplot.imread("https://github.com/CambridgeEngineering/PartIA-Computing-Examples-Papers/raw/master/images/southwing.png")
+Existing = pyplot.imread("southwing.jpeg")
 
 G = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])
 
@@ -13,5 +13,6 @@ for i in range (Edged.shape[0]-2):
             for y in range(3):
                 intermediate_sum += G[x,y]*Existing[i-1+x,j-1+y]
         Edged[i,j] = intermediate_sum
-                     
+Edged = (Edged - Edged.min())/(Edged.max() - Edged.min())
 pyplot.imshow(Edged, cmap='gray')
+pyplot.show()
