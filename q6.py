@@ -6,7 +6,7 @@ from IPython.display import Audio
 
 
 # Read frequency and data array for sound track
-fs, x = scipy.io.wavfile.read("Armstrong_Small_step.ogg") 
+fs, x = scipy.io.wavfile.read("Armstrong_Small_step.wav") 
 
 # If we have a stero track (left and right channels), take just the first channel
 if len(x.shape) > 1:
@@ -20,9 +20,8 @@ xf = np.fft.rfft(x)
 xf_filtered = xf.copy()
 
 # Cut-off frequencies (Hz)
-cutoff_freq_low = 1200
-cutoff_freq_high = 1500
-
+cutoff_freq_low = 500
+cutoff_freq_high = 3500
 # Cut-off indices in transform array
 n_cut_low = int(2*cutoff_freq_low*len(xf_filtered)/fs)
 n_cut_high = int(2*cutoff_freq_high*len(xf_filtered)/fs)
@@ -36,3 +35,5 @@ x_filtered = np.fft.irfft(xf_filtered)
 
 
 Audio(x_filtered, rate=fs)
+
+scipy.io.wavfile.write("filtered_output.wav", fs, x_filtered.astype(np.int16))
